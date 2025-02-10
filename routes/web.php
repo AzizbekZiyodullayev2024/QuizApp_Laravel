@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('');
 });
-//Azizbek
+Route::get('/test', function () {
+    return view('test');
+});
