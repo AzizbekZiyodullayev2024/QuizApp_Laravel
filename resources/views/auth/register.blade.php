@@ -1,79 +1,52 @@
-<x-header></x-header>
-<body class="bg-gray-50">
-<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
-                Already have an account?
-                <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
-                    Sign in
-                </a>
-            </p>
-        </div>
-        <form id="form" class="mt-8 space-y-6" action="#" method="POST">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                    <label for="full_name" class="sr-only">Full name</label>
-                    <input id="full_name" name="full_name" type="text" required
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                           placeholder="Full name">
-                </div>
-                <div>
-                    <label for="email" class="sr-only">Email address</label>
-                    <input id="email" name="email" type="email" required
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                           placeholder="Email address">
-                </div>
-                <div>
-                    <label for="password" class="sr-only">Password</label>
-                    <input id="password" name="password" type="password" required
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                           placeholder="Password">
-                </div>
-                <div>
-                    <label for="confirm-password" class="sr-only">Confirm Password</label>
-                    <input id="confirm-password" name="confirm-password" type="password" required
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                           placeholder="Confirm password">
-                </div>
-            </div>
+<x-guest-layout>
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
 
-            <div class="flex items-center">
-                <input id="terms" name="terms" type="checkbox" required
-                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                <label for="terms" class="ml-2 block text-sm text-gray-900">
-                    I agree to the
-                    <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms and Conditions</a>
-                </label>
-            </div>
-            <p id="error"></p>
-            <div>
-                <button type="submit" onclick="register()"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Create Account
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-<script>
-    async function register() {
-        let form = document.getElementById("form"),
-            formData = new FormData(form);
-        const { default: apiFetch } = await import("<?php echo asset('/js/utils/apiFetch.js')?>");
-        try {
-            const data = await apiFetch('/register', { method: 'POST', body: formData });
-            console.log(data);
-            localStorage.setItem('token', data.token);
-            window.location.href = '/dashboard';
-        } catch (error) {
-            console.error(error.data.errors);
-            Object.keys(error.data.errors).forEach(err => {
-                document.getElementById('error').innerHTML += `<p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
-            });
-        }
-    }
-</script>
-</body>
-</html>
+        <!-- Name -->
+        <div>
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                            type="password"
+                            name="password_confirmation" required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                {{ __('Already registered?') }}
+            </a>
+
+            <x-primary-button class="ms-4">
+                {{ __('Register') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>
