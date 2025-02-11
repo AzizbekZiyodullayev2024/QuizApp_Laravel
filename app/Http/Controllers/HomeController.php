@@ -16,13 +16,4 @@ class HomeController extends Controller{
     public function about(){
         return view('about');
     }
-    public function create_quiz(){
-        return view('create-quiz');
-    }
-    public function my_quizzes(){
-        return view('my-quizzes');
-    }
-    public function statistics(){
-        return view('dashboard.statistics');
-    }
 }

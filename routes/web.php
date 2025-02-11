@@ -21,13 +21,12 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('/home',[HomeController::class,'home'])->name('home');
 Route::get('/about',[HomeController::class,'about'])->name('about');
 
+Route::get('/dashboard/statistics',[DashboardController::class,'statistics'])->name('statistics');
+Route::get('/dashboard/create-quiz',[DashboardController::class,'create_quiz'])->name('create-quiz');
+Route::get('/dashboard/my-quizzes',[DashboardController::class,'my_quizzes'])->name('my-quizzes');
 Route::get('/take-quiz', [QuizController::class , 'takeQuiz'])->middleware('auth')->name('take-quiz');
 
-Route::get('/dashboard',[DashboardController::class,'home'])->name('dashboard');
-
-// Route::get('/home', function () {
-//     return view('home');
-// })->middleware(['auth', 'verified'])->name('home');
+Route::get('/dashboard',[DashboardController::class,'home'])->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

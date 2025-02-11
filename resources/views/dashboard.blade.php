@@ -1,5 +1,12 @@
-<x-header></x-header>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Quiz App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
@@ -12,8 +19,8 @@
                     </button>
                 </div>
             </div>
-
-            <x-sidebar></x-sidebar>
+            
+        <x-sidebar></x-sidebar>
 
         </aside>
 
@@ -40,12 +47,12 @@
                 <!-- Quick Actions -->
                 <div class="mb-8">
                     <div class="flex flex-wrap gap-4">
-                        <a href="create-quiz.html" class="flex-1 min-w-[200px] bg-blue-600 text-white p-4 rounded-lg shadow hover:bg-blue-700 transition">
+                        <a href="/create-quiz" class="flex-1 min-w-[200px] bg-blue-600 text-white p-4 rounded-lg shadow hover:bg-blue-700 transition">
                             <i class="fas fa-plus mb-2 text-2xl"></i>
                             <h3 class="font-semibold">Create New Quiz</h3>
                             <p class="text-sm opacity-90">Start creating a new quiz</p>
                         </a>
-                        <a href="statistics.html" class="flex-1 min-w-[200px] bg-green-600 text-white p-4 rounded-lg shadow hover:bg-green-700 transition">
+                        <a href="/statistics" class="flex-1 min-w-[200px] bg-green-600 text-white p-4 rounded-lg shadow hover:bg-green-700 transition">
                             <i class="fas fa-chart-line mb-2 text-2xl"></i>
                             <h3 class="font-semibold">View Statistics</h3>
                             <p class="text-sm opacity-90">Check your progress</p>
