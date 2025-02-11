@@ -1,5 +1,4 @@
 <x-header></x-header>
-
 <body class="bg-gray-50">
 <!-- Navigation -->
 <nav class="bg-white shadow-lg">
