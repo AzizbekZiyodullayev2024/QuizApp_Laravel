@@ -6,6 +6,6 @@ use Illuminate\Http\Request;
 
 class QuizController extends Controller{
     public function takeQuiz(){
-        return view('/take-quiz');
+        return view('quiz.take-quiz');
     }
 }

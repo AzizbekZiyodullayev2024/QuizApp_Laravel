@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <a href="/dashboard" class="py-2 px-4 text-gray-500 hover:text-gray-700">Dashboard</a>
+                    <a href={{ route('home') }} class="py-2 px-4 text-gray-500 hover:text-gray-700">Dashboard</a>
                     <a href="/profile" class="py-2 px-4 text-gray-500 hover:text-gray-700">Profile</a>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <a href="dashboard.html" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <a href={{ route('home') }} class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                     Return to Dashboard
                 </a>
             </div>
