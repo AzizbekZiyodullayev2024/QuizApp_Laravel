@@ -27,14 +27,19 @@ class QuizController extends Controller{
             'title' => $validator['title'],
             'description' => $validator['description'],
             'time_limit' => $validator['timeLimit'],
-            'slug' => 'required|string|uinique:quizzes,slug',            
-        ]);
-
-
-
-        // foreach ($validator['questions'] as $question){
-        //     $quiz->questions()->create([]);
-        // }
-
+            'slug' => Str::slug(strtotime('now') . '/' . $request['title']),            
+        ]);                                                                                                                                                                                                           
+        foreach ($validator['questions'] as $question){
+            $question[] = $quiz->questions()->create([
+                'name'=>$question['quiz']
+            ]);
+            foreach ($question['options'] as $optionKey => $option){
+                $question->options()->create([
+                    'name'=>$option,
+                    'is_correct'=>$question['is_correct'] == $optionKey ? 1 : 0,
+                ]);
+            }
+        }
+        return to_route('my-quizzes'); 
 }
 }
