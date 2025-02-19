@@ -32,13 +32,19 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('/about',[HomeController::class,'about'])->name('about');
 
 Route::get('/home',[DashboardController::class,'home'])->name('home');
-Route::get('/dashboard/statistics',[DashboardController::class,'statistics'])->name('statistics');
-Route::get('/dashboard/create-quiz',[DashboardController::class,'create_quiz'])->name('create-quiz');
-Route::get('/dashboard/my-quizzes',[DashboardController::class,'my_quizzes'])->name('my-quizzes');
-Route::get('/dashboard',[DashboardController::class,'home'])->middleware('auth')->name('dashboard');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('dashboard')->middleware('auth')->group(function()  {
+    Route::get('/statistics',[DashboardController::class,'statistics'])->name('statistics');
+    Route::get('/my-quizzes',[DashboardController::class,'my_quizzes'])->name('my-quizzes');
+    Route::get('/',[DashboardController::class,'home'])->middleware('auth')->name('dashboard');
+
+    Route::get('/create-quiz',[QuizController::class,'create'])->name('create-quiz');
+    Route::post('/create-quiz',[QuizController::class,'store'])->name('store-quiz');
+
+    Route::get('/', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
+});
 
 Route::get('/take-quiz', [QuizController::class , 'takeQuiz'])->middleware('auth')->name('take-quiz');
 

@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Quiz - Dashboard</title>
-    <script src="add-quiz.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<x-header></x-header>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
@@ -52,7 +43,8 @@
                         </div>
 
                         <!-- Main Form -->
-                        <form class="space-y-4" id="quizForm">
+                        <form class="space-y-4" id="quizForm" method="POST" >
+                            @csrf
                             <!-- Quiz Details Section -->
                             <div class="bg-white p-6 rounded-lg shadow-md">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Quiz Details</h3>
