@@ -16,10 +16,25 @@ class QuizController extends Controller{
 
     public function edit(Quiz $quiz){
         return view('dashboard.edit-quiz',[
-            'quizzes' =>  Quiz::withCount('questions')->get()
+            'quiz' =>  $quiz
         ]);
     }
-    public function update(Request $request,string $id){
+    public function update(Request $request,Quiz $quiz){
+
+        $validator = $request->validate([
+            'title'=>'required|string|max:255',
+            'description'=>'required|string',
+            'timeLimit'=>'required|integer',
+            'questions' => 'required|array',
+        ]);
+
+        $quiz->update([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'time_limit' => $request['timeLimit'],
+            'slug' => Str::slug(strtotime('now').'/'.$request['title']), 
+            // 'quiz'->save()
+        ]);
 
     }
 
