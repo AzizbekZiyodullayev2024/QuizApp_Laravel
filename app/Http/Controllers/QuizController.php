@@ -19,19 +19,22 @@ class QuizController extends Controller{
             'title'=>'required|string|max:255',
             'description'=>'required|string',
             'timeLimit'=>'required|integer',
-            'questions' => 'required|array'
+            'questions' => 'required|array',
         ]);
 
         $quiz = Quiz::create([
             'user_id' => 'auth()->id()',
             'title' => $validator['title'],
             'description' => $validator['description'],
-            'time_limit' => $validator['timeLimit'],            
+            'time_limit' => $validator['timeLimit'],
+            'slug' => 'required|string|uinique:quizzes,slug',            
         ]);
 
-        foreach ($validator['questions'] as $question){
-            $quiz->questions()->create([]);
-        }
+
+
+        // foreach ($validator['questions'] as $question){
+        //     $quiz->questions()->create([]);
+        // }
 
 }
 }
