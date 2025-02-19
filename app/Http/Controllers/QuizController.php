@@ -24,14 +24,14 @@ class QuizController extends Controller{
         ]);
 
         $quiz = Quiz::create([
-            'user_id' => auth()->id(),
+            'user_id' => 'auth()->id()',
             'title' => $validator['title'],
             'description' => $validator['description'],
             'time_limit' => $validator['timeLimit'],
             'slug' => Str::slug(strtotime('now') . '/' . $request['title']),            
         ]);                                                                                                                                                                                                                   
         foreach ($validator['questions'] as $question){
-            $question[] = $quiz->questions()->create([
+            $question = $quiz->questions()->create([
                 'name'=>$question['quiz']
             ]);
             foreach ($question['options'] as $optionKey => $option){
