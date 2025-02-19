@@ -5,8 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class QuizController extends Controller{
+    public function index(){
+        return view('dashboard.my-quizzes',[
+            'quizzes' =>  Quiz::withCount('questions')->get()
+        ]);
+    }
+
+    public function edit(Quiz $quiz){
+        return view('dashboard.edit-quiz',[
+            'quizzes' =>  Quiz::withCount('questions')->get()
+        ]);
+    }
+    public function update(Request $request,string $id){
+
+    }
+
     public function takeQuiz(){
         return view('quiz.take-quiz');
     }
@@ -24,7 +40,7 @@ class QuizController extends Controller{
         ]);
 
         $quiz = Quiz::create([
-            'user_id' => 'auth()->id()',
+            'user_id' => auth()->id(),
             'title' => $validator['title'],
             'description' => $validator['description'],
             'time_limit' => $validator['timeLimit'],
@@ -43,4 +59,5 @@ class QuizController extends Controller{
         }
         return to_route('my-quizzes'); 
 }
+
 }

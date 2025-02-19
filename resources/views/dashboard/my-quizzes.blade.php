@@ -36,7 +36,7 @@
 
                         <div class="flex items-center space-x-2">
                             <img src="https://via.placeholder.com/40" alt="Profile" class="w-10 h-10 rounded-full">
-                            <span class="text-gray-700 font-medium">John Doe</span>
+                            <span class="text-gray-700 font-medium">{{ auth()->user()->name }}</span>
                         </div>
                     </div>
                 </div>
@@ -68,16 +68,27 @@
 
                 <!-- Search and Filter Section -->
                 <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
-                    @foreach($quizzes as $quiz);
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex-1">
+                            <input type="text" placeholder="Search quizzes..." class="w-full px-4 py-2 border rounded-lg">
+                        </div>
+                        <select class="px-4 py-2 border rounded-lg">
+                            <option>Sort by</option>
+                            <option>Date Created</option>
+                            <option>Completion Rate</option>
+                            <option>Title</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Quiz Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Quiz Card 1 -->
+                     @foreach($quizzes as $quiz)
                     <div class="bg-white rounded-lg shadow-sm p-6">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold">Basic Mathematics</h3>
+                                <h3 class="text-lg font-semibold">{{ $quiz->title }}</h3>
                                 <p class="text-gray-500 text-sm">Mathematics</p>
                             </div>
                             <div class="dropdown">
@@ -88,10 +99,10 @@
                                 </button>
                             </div>
                         </div>
-                        <p class="text-gray-600 mb-4">Test basic arithmetic and algebraic concepts</p>
+                        <p class="text-gray-600 mb-4">{{ $quiz->description }}</p>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm text-gray-500">10 Questions</span>
-                            <span class="text-sm text-gray-500">15 minutes</span>
+                            <span class="text-sm text-gray-500">{{ $quiz->questions_count }} Questions</span>
+                            <span class="text-sm text-gray-500">{{ $quiz->time_limit }} minutes</span>
                         </div>
                         <div class="mb-4">
                             <div class="w-full bg-gray-200 rounded-full h-2">
@@ -102,22 +113,28 @@
                         <div class="flex justify-between">
                             <button class="text-indigo-600 hover:text-indigo-800">Edit</button>
                             <button class="text-green-600 hover:text-green-800">View Results</button>
+                            <button class="text-green-600 text-green-100 rounded p-1 hover:bg-blue-500"
+                                    onclick="share('{{ $quiz->slug }}')"
+                            >Share</button>
                             <button class="text-red-600 hover:text-red-800">Delete</button>
                         </div>
                     </div>
+                    @endforeach
 
-                    <!-- Quiz Card 2 -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <!-- Similar structure to Quiz Card 1 -->
-                    </div>
-
-                    <!-- Quiz Card 3 -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <!-- Similar structure to Quiz Card 1 -->
-                    </div>
                 </div>
             </main>
         </div>
+        <script>
+            async function share(slug){
+                try {
+                    slug = '{{ url('/take-quiz/') }}/' + slug;
+                    await navigator.clipboard.writeText(slug);
+                    alert('Content copied to clipboard'); 
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+            }
+        </script>
     </div>
 </body>
 </html>

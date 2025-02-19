@@ -25,7 +25,7 @@
 
                         <div class="flex items-center space-x-2">
                             <img src="https://via.placeholder.com/40" alt="Profile" class="w-10 h-10 rounded-full">
-                            <span class="text-gray-700 font-medium">John Doe</span>
+                            <span class="text-gray-700 font-medium">{{ auth()->user()->name }}</span>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,8 @@
                                     <div>
                                         <label for="title" class="block text-sm font-medium text-gray-700">Quiz Title</label>
                                         <input type="text" id="title" name="title" placeholder="Quiz Title" required
-                                               class="w-full px-4 py-2 border rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                               class="w-full px-4 py-2 border rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                                               value="{{ $quiz->title }}">
                                     </div>
                                     <div>
                                         <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
@@ -117,7 +118,7 @@
                             <div class="flex justify-end">
                                 <button type="submit"
                                         class="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                    Create Quiz
+                                    Edit Quiz
                                 </button>
                             </div>
                         </form>
