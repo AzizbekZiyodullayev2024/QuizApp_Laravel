@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class QuizController extends Controller{
             'description' => $validator['description'],
             'time_limit' => $validator['timeLimit'],
             'slug' => Str::slug(strtotime('now') . '/' . $request['title']),            
-        ]);                                                                                                                                                                                                           
+        ]);                                                                                                                                                                                                                   
         foreach ($validator['questions'] as $question){
             $question[] = $quiz->questions()->create([
                 'name'=>$question['quiz']
