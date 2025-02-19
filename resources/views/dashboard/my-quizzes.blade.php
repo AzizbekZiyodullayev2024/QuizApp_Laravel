@@ -68,17 +68,7 @@
 
                 <!-- Search and Filter Section -->
                 <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
-                    <div class="flex flex-wrap gap-4">
-                        <div class="flex-1">
-                            <input type="text" placeholder="Search quizzes..." class="w-full px-4 py-2 border rounded-lg">
-                        </div>
-                        <select class="px-4 py-2 border rounded-lg">
-                            <option>Sort by</option>
-                            <option>Date Created</option>
-                            <option>Completion Rate</option>
-                            <option>Title</option>
-                        </select>
-                    </div>
+                    @foreach($quizzes as $quiz);
                 </div>
 
                 <!-- Quiz Grid -->
