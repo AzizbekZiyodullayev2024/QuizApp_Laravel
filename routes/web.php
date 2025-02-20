@@ -1,62 +1,40 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\QuizController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use  App\Http\Controllers\QuizController;
+use App\Http\Controllers\DashboardController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/',[HomeController::class,'home'])->name('home');
-Route::get('/about',[HomeController::class,'about'])->name('about');
+Route::middleware('auth')->group(function () {
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'home'])->name('dashboard');
+        Route::prefix('quizzes')->group(function () {
+            Route::get('/', [QuizController::class, 'index'])->name('my-quizzes');
+            Route::get('/{quiz}', [QuizController::class, 'edit'])->name('edit-quiz');
+            Route::post('/{quiz}/update', [QuizController::class, 'update'])->name('update-quiz');
+            Route::get('/{quiz}/delete', [QuizController::class, 'destroy'])->name('delete-quiz');
+            Route::get('/results/{result}', [ResultController::class, 'show'])->name('my-results');
+        });
 
-Route::get('/home',[DashboardController::class,'home'])->name('home');
+        Route::get('/statistics', [ResultController::class, 'index'])->name('statistics');
 
-Route::prefix('dashboard')->middleware('auth')->group(function()  {
-
-    Route::get('/create-quiz',[QuizController::class,'create'])->name('create-quiz');
-    Route::post('/create-quiz',[QuizController::class,'store'])->name('store-quiz');
-    
-    Route::get('/my-quizzes',[QuizController::class,'index'])->name('my-quizzes');
-    Route::get('/my-quizzes/{quiz}',[QuizController::class,'edit'])->name('edit-quizzes');
-    Route::post('/my-quizzes/{quiz}/update',[QuizController::class,'update'])->name('update-quiz');
-    
-    Route::get('/',[DashboardController::class,'home'])->middleware('auth')->name('dashboard');
-    Route::get('/statistics',[DashboardController::class,'statistics'])->name('statistics');
-
-    Route::get('/', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+        Route::get('/create-quiz', [QuizController::class, 'create'])->name('create-quiz');
+        Route::post('/create-quiz', [QuizController::class, 'store'])->name('store-quiz');
+    });
+    Route::get('show-quiz/{slug}', [QuizController::class, 'show'])->name('show-quiz');
+    Route::post('start-quiz/{slug}', [QuizController::class, 'startQuiz'])->name('start-quiz');
+    Route::post('take-quiz/{slug}', [QuizController::class, 'takeQuiz'])->name('take-quiz');
 });
-
-Route::get('/take-quiz', [QuizController::class , 'takeQuiz'])->middleware('auth')->name('take-quiz');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', action: [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 require __DIR__.'/auth.php';

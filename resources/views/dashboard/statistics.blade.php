@@ -1,47 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Statistics - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+<x-header></x-header>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body class="bg-gray-100">
 <div class="min-h-screen flex">
     <!-- Sidebar -->
-    <aside class="bg-white w-64 min-h-screen flex flex-col shadow-lg transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in fixed md:static z-30" id="sidebar">
-        <div class="p-4 border-b flex items-center justify-between">
-            <h2 class="text-2xl font-bold text-gray-800">Quiz App</h2>
-            <div>
-                <button class="md:hidden text-gray-600" onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')">
-                    <i class="fas fa-close text-xl"></i>
-                </button>
-            </div>
-        </div>
-
-        <x-sidebar></x-sidebar>
-    
-    </aside>
-
+    <x-dashboard.sidebar></x-dashboard.sidebar>
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 flex flex-col">
         <!-- Top Navigation -->
-        <header class="bg-white shadow-sm">
-            <div class="h-16 flex items-center justify-between px-4">
-                <button class="md:hidden text-gray-600" onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-                <div class="flex items-center space-x-4">
-
-                    <div class="flex items-center space-x-2">
-                        <img src="https://via.placeholder.com/40" alt="Profile" class="w-10 h-10 rounded-full">
-                        <span class="text-gray-700 font-medium">{{ auth()->user()->name }}</span>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <x-dashboard.navbar></x-dashboard.navbar>
 
         <!-- Main Content Area -->
         <main class="p-6">
@@ -127,24 +93,18 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4 text-sm text-gray-900">JavaScript Basics</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">2023-10-15</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">90%</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">25 min</td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
-                            </td>
-                        </tr>
-                        <twr>
-                            <td class="px-6 py-4 text-sm text-gray-900">HTML Advanced</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">2023-10-14</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">85%</td>
-                            <td class="px-6 py-4 text-sm text-gray-500">30 min</td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
-                            </td>
-                        </twr>
+                        @foreach($data as $item)
+                            <tr>
+                                <td class="px-6 py-4 text-sm text-gray-900"><a href="{{ route('my-results', ['result'=>$item['result']->id]) }}">{{ $item['result']->quiz->title }}</a></td>
+                                <td class="px-6 py-4 text-sm text-gray-500"><a href="{{ route('my-results', ['result'=>$item['result']->id]) }}">{{ $item['result']->started_at }}</a></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><a href="{{ route('my-results', ['result'=>$item['result']->id]) }}">{{ $item['score'] }}%</a></td>
+                                <td class="px-6 py-4 text-sm text-gray-500"><a href="{{ route('my-results', ['result'=>$item['result']->id]) }}">{{ $item['time_taken'] }}</a></td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"><a
+                                            href="{{ route('my-results', ['result'=>$item['result']->id]) }}">{{ $item['status'] }}</a></span>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
