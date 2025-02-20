@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller{
-    public function home(){
-        return view('home');
+class HomeController extends Controller
+{
+    public function welcome () {
+        return view('welcome');
     }
 
-    public function dashboard(){
-        return view('dashboard.dashboard');
-    }
-
-    public function about(){
+    public function about () {
         return view('about');
     }
 }
