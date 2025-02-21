@@ -11,5 +11,6 @@ class Option extends Model{
         'question_id',
         'name',
         'is_correct'
+        
     ];
 }
