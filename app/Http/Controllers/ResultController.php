@@ -28,11 +28,13 @@ class ResultController extends Controller
             $answers = Answer::query()
                 ->where('result_id', $result->id)
                 ->get();
+                
             $correctOptionCount = Option::query()
                 ->select('question_id')
                 ->where('is_correct', 1)
                 ->whereIn('id', $answers->pluck('option_id'))
                 ->count();
+
             $data = [
                 [
                     'score'=>(int)($correctOptionCount/$question_count * 100),

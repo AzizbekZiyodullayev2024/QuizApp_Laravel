@@ -219,6 +219,7 @@ class QuizController extends Controller
                 ->whereNotIn('id', $options->pluck('question_id'))
                     ->with('options')
                         ->get();
+                        
         if (count($questions)) {
             return view('quiz.take-quiz', [
                 'quiz' => $quiz,

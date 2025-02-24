@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
+
 Route::middleware('auth')->group(function () {
     
     Route::prefix('dashboard')->group(function () {
