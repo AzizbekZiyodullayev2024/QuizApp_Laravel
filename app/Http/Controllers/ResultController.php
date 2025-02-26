@@ -35,6 +35,7 @@ class ResultController extends Controller
                 ->whereIn('id', $answers->pluck('option_id'))
                 ->count();
 
+                
             $data = [
                 [
                     'score'=>(int)($correctOptionCount/$question_count * 100),
