@@ -7,9 +7,9 @@ use App\Http\Controllers\HomeController;
 use  App\Http\Controllers\QuizController;
 use App\Http\Controllers\DashboardController;
 
+
 Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
-
 
 Route::middleware('auth')->group(function () {
     
@@ -38,5 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';
