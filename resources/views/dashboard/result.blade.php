@@ -18,6 +18,7 @@
                     <p class="text-gray-600">{{ $quiz->description }}</p>
                 </div>
 
+                
                 <!-- Questions Section -->
                 <div class="bg-white rounded-lg shadow-sm p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Questions</h2>

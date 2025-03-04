@@ -93,6 +93,7 @@
         </main>
     </div>
     <script>
+        
         async function share(slug) {
             try {
                 slug = '{{ url('/show-quiz/') }}/' + slug;
