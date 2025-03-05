@@ -7,16 +7,14 @@ use App\Http\Controllers\HomeController;
 use  App\Http\Controllers\QuizController;
 use App\Http\Controllers\DashboardController;
 
-
-Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
+Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::middleware('auth')->group(function () {
-    
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'home'])->name('dashboard');
         Route::prefix('quizzes')->group(function () {
-            Route::get('/', [QuizController::class, 'index'])->name('my-quizzes');
+            Route::get('/', [QuizController::class, 'index'])->name('quizzes');
             Route::get('/{quiz}', [QuizController::class, 'edit'])->name('edit-quiz');
             Route::post('/{quiz}/update', [QuizController::class, 'update'])->name('update-quiz');
             Route::get('/{quiz}/delete', [QuizController::class, 'destroy'])->name('delete-quiz');

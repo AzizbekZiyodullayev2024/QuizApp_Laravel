@@ -18,11 +18,11 @@ class QuizFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'=>1,
-            'title' => $this->faker->sentence(),
-            'description' => $this->faker->paragraph(),
-            'time_limit' => $this->faker->randomDigit(),
-            'slug' => $this->faker->slug(),
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->sentence,
+            'time_limit' => $this->faker->randomNumber(),
+            'slug' => $this->faker->slug,
+            'user_id' => User::factory(),
         ];
     }
 }
